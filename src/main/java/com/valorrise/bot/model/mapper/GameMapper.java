@@ -20,7 +20,6 @@ public class GameMapper {
                 .lives(dto.getLives())
                 .gold(dto.getGold())
                 .score(dto.getScore())
-                .highScore(dto.getHighScore())
                 .turn(dto.getTurn())
                 .build();
     }
@@ -35,7 +34,6 @@ public class GameMapper {
                 .lives(entity.getLives())
                 .gold(entity.getGold())
                 .score(entity.getScore())
-                .highScore(entity.getHighScore())
                 .turn(entity.getTurn())
                 .build();
     }

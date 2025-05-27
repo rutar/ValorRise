@@ -36,7 +36,13 @@ public class GameService {
             // Start a new game
             GameDto gameDto = apiClient.startGame();
             Game game = GameMapper.toEntity(gameDto);
+            assert game != null;
             logger.info("Started game: {}, lives: {}, gold: {}", game.getGameId(), game.getLives(), game.getGold());
+
+            // Statistics tracking
+            int tasksCompleted = 0;
+            int tasksFailed = 0;
+            int totalRewards = 0;
 
             // Game loop
             while (game.getLives() > 0) {
@@ -61,6 +67,7 @@ public class GameService {
                     // Solve task
                     SolveResponseDto responseDto = apiClient.solveAdvertisement(game.getGameId(), bestAd.getAdId());
                     SolveResponse response = SolveResponseMapper.toEntity(responseDto);
+                    assert response != null;
                     logger.info("Solved task {}, success: {}, lives: {}, gold: {}, score: {}",
                             bestAd.getAdId(), response.isSuccess(), response.getLives(), response.getGold(), response.getScore());
 
@@ -70,8 +77,19 @@ public class GameService {
                     game.setScore(response.getScore());
                     game.setTurn(response.getTurn());
 
-                    if (!response.isSuccess()) {
+                    // Update statistics
+                    if (response.isSuccess()) {
+                        tasksCompleted++;
+                        totalRewards += bestAd.getReward();
+                    } else {
+                        tasksFailed++;
                         logger.warn("Task failed: {}", response.getMessage());
+                    }
+
+                    // Check if score exceeds 1000
+                    if (game.getScore() > 1000) {
+                        logger.info("Score exceeded 1000, stopping game: {}", game.getGameId());
+                        break;
                     }
                 } catch (GameApiException e) {
                     logger.error("API error for game {}: status={}, message={}",
@@ -84,8 +102,11 @@ public class GameService {
                 }
             }
 
-            logger.info("Game over for game: {}, final score: {}, high score: {}",
-                    game.getGameId(), game.getScore(), game.getHighScore());
+            // Log final statistics
+            logger.info("Game over for game: {}, final score: {}",
+                    game.getGameId(), game.getScore());
+            logger.info("Game statistics: steps (turns): {}, tasks completed: {}, tasks failed: {}, total rewards earned: {}",
+                    game.getTurn(), tasksCompleted, tasksFailed, totalRewards);
         } catch (GameApiException e) {
             logger.error("Failed to start game: status={}, message={}", e.getStatus(), e.getMessage());
         }

@@ -14,6 +14,5 @@ public class GameDto {
     private int lives;
     private int gold;
     private int score;
-    private int highScore;
     private int turn;
 }
