@@ -1,17 +1,34 @@
 spring:
   application:
-    name=ValorRise
+    name: ValorRise
 
 game:
   api:
     base-url: https://dragonsofmugloar.com/api/v2
     timeout: 5000
+  shop:
+    min-lives-to-buy: 3
+    min-gold-to-buy: 50
 
 logging:
   level:
     com.valorrise.bot.api.client.GameApiClient: DEBUG
+    com.valorrise.bot: INFO
+
 feign:
   client:
     config:
       game-api:
         loggerLevel: FULL
+        connectTimeout: 5000
+        readTimeout: 5000
+
+resilience4j.retry:
+  instances:
+    gameApi:
+      maxAttempts: 3
+      waitDuration: 500ms
+      retryExceptions:
+        - java.lang.Exception
+      ignoreExceptions:
+        - com.valorrise.bot.exception.GameApiException
