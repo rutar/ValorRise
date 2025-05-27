@@ -19,6 +19,7 @@ public class AdvertisementMapper {
                 .reward(dto.getReward())
                 .expiresIn(dto.getExpiresIn())
                 .probability(dto.getProbability())
+                .encrypted(dto.isEncrypted())
                 .build();
     }
 
@@ -32,6 +33,7 @@ public class AdvertisementMapper {
                 .message(entity.getMessage())
                 .reward(entity.getReward())
                 .expiresIn(entity.getExpiresIn())
+                .encrypted(entity.isEncrypted())
                 .probability(entity.getProbability())
                 .build();
     }

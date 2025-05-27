@@ -23,6 +23,9 @@ public class AdvertisementDto {
     @JsonProperty("expiresIn")
     private int expiresIn;
 
+    @JsonProperty("encrypted")
+    private boolean encrypted;
+
     @JsonProperty("probability")
     private String probability;
 }

@@ -14,5 +14,6 @@ public class Advertisement {
     private String message;
     private int reward;
     private int expiresIn;
+    private boolean encrypted;
     private String probability;
 }
