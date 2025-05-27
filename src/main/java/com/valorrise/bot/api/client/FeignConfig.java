@@ -4,9 +4,13 @@ import com.valorrise.bot.configuration.ApiConfiguration;
 import feign.Client;
 import feign.Request;
 import feign.Response;
+import feign.codec.Encoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.codec.ErrorDecoder;
+import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -29,9 +33,21 @@ public class FeignConfig {
     }
 
     @Bean
-    public JacksonEncoder feignEncoder() {
-        return new JacksonEncoder();
+    public Encoder feignEncoder(ObjectFactory<HttpMessageConverters> converters) {
+        return new SpringEncoder(converters) {
+            @Override
+            public void encode(Object object, java.lang.reflect.Type bodyType, feign.RequestTemplate template) {
+                super.encode(object, bodyType, template);
+                // Fix adId by replacing %3D with =
+                String uri = template.url();
+                if (uri.contains("%3D")) {
+                    String fixedUri = uri.replace("%3D", "=");
+                    template.uri(fixedUri);
+                }
+            }
+        };
     }
+
 
     @Bean
     public ErrorDecoder errorDecoder() {

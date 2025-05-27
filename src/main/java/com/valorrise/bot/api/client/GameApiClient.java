@@ -1,5 +1,6 @@
 package com.valorrise.bot.api.client;
 
+import com.valorrise.bot.model.domain.Reputation;
 import com.valorrise.bot.model.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,10 @@ public interface GameApiClient {
 
     @GetMapping("/{gameId}/shop")
     List<ItemDto> getShopItems(@PathVariable("gameId") String gameId);
+
+    @PostMapping("/{gameId}/investigate/reputation")
+    ReputationDto getReputation(@PathVariable("gameId") String gameId);
+
 
     @PostMapping("/{gameId}/shop/buy/{itemId}")
     GameDto buyItem(@PathVariable("gameId") String gameId, @PathVariable("itemId") String itemId);
