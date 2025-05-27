@@ -1,0 +1,17 @@
+spring:
+  application:
+    name=ValorRise
+
+game:
+  api:
+    base-url: https://dragonsofmugloar.com/api/v2
+    timeout: 5000
+
+logging:
+  level:
+    com.valorrise.bot.api.client.GameApiClient: DEBUG
+feign:
+  client:
+    config:
+      game-api:
+        loggerLevel: FULL
