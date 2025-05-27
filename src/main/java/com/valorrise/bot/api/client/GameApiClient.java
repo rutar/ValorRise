@@ -25,6 +25,4 @@ public interface GameApiClient {
     @PostMapping("/{gameId}/shop/buy/{itemId}")
     GameDto buyItem(@PathVariable("gameId") String gameId, @PathVariable("itemId") String itemId);
 
-    @GetMapping("/{gameId}/weather")
-    WeatherDto getWeather(@PathVariable("gameId") String gameId);
 }

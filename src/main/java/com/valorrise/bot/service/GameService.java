@@ -5,13 +5,10 @@ import com.valorrise.bot.exception.GameApiException;
 import com.valorrise.bot.model.domain.Advertisement;
 import com.valorrise.bot.model.domain.Game;
 import com.valorrise.bot.model.domain.SolveResponse;
-import com.valorrise.bot.model.domain.Weather;
 import com.valorrise.bot.model.dto.GameDto;
 import com.valorrise.bot.model.dto.SolveResponseDto;
-import com.valorrise.bot.model.dto.WeatherDto;
 import com.valorrise.bot.model.mapper.GameMapper;
 import com.valorrise.bot.model.mapper.SolveResponseMapper;
-import com.valorrise.bot.model.mapper.WeatherMapper;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,11 +41,6 @@ public class GameService {
             // Game loop
             while (game.getLives() > 0) {
                 try {
-                    // Check weather
-                    WeatherDto weatherDto = apiClient.getWeather(game.getGameId());
-                    Weather weather = WeatherMapper.toEntity(weatherDto);
-                    logger.debug("Weather for game {}: {}", game.getGameId(), weather.getCode());
-
                     // Buy health potion if needed
                     game = shopService.buyHealthPotionIfNeeded(game);
                     if (game.getLives() <= 0) {
@@ -58,7 +50,7 @@ public class GameService {
 
                     // Fetch and select task
                     Advertisement bestAd = taskSelectionService.selectBestTask(
-                            gameApiService.getAdvertisements(game.getGameId()), weather);
+                            gameApiService.getAdvertisements(game.getGameId()));
                     if (bestAd == null) {
                         logger.warn("No valid advertisements for game: {}", game.getGameId());
                         break;
