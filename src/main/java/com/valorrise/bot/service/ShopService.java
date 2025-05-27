@@ -41,34 +41,44 @@ public class ShopService {
             return game;
         }
 
+        return buyItem(game, "hpot");
+    }
+
+    @Retry(name = "gameApi")
+    public Game buyItem(Game game, String itemId) {
+        if (game == null) {
+            logger.warn("Cannot buy item for null game");
+            return null;
+        }
+
         try {
             List<ItemDto> itemDtos = apiClient.getShopItems(game.getGameId());
             List<Item> items = itemDtos.stream()
                     .map(ItemMapper::toEntity)
                     .toList();
 
-            Item healthPotion = items.stream()
-                    .filter(item -> "hpot".equals(item.getId()))
+            Item targetItem = items.stream()
+                    .filter(item -> itemId.equals(item.getId()))
                     .findFirst()
                     .orElse(null);
 
-            if (healthPotion == null) {
-                logger.warn("No health potion found in shop for game: {}", game.getGameId());
+            if (targetItem == null) {
+                logger.warn("Item {} not found in shop for game: {}", itemId, game.getGameId());
                 return game;
             }
 
-            if (game.getGold() >= healthPotion.getCost()) {
-                logger.info("Buying health potion for game: {}, cost: {}", game.getGameId(), healthPotion.getCost());
-                GameDto updatedGameDto = apiClient.buyItem(game.getGameId(), healthPotion.getId());
+            if (game.getGold() >= targetItem.getCost() + minGoldToBuy) {
+                logger.info("Buying item {} for game: {}, cost: {}", itemId, game.getGameId(), targetItem.getCost());
+                GameDto updatedGameDto = apiClient.buyItem(game.getGameId(), targetItem.getId());
                 updatedGameDto.setGameId(game.getGameId());
                 return GameMapper.toEntity(updatedGameDto);
             } else {
-                logger.info("Insufficient gold for health potion: gameId={}, gold={}, cost={}",
-                        game.getGameId(), game.getGold(), healthPotion.getCost());
+                logger.info("Insufficient gold for item {}: gameId={}, gold={}, cost={}, minGoldToBuy={}",
+                        itemId, game.getGameId(), game.getGold(), targetItem.getCost(), minGoldToBuy);
                 return game;
             }
         } catch (Exception e) {
-            logger.error("Error buying health potion for game {}: {}", game.getGameId(), e.getMessage());
+            logger.error("Error buying item {} for game {}: {}", itemId, game.getGameId(), e.getMessage());
             return game; // Return unchanged game state on error
         }
     }
