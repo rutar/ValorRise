@@ -13,7 +13,7 @@ game:
 logging:
   level:
     com.valorrise.bot.api.client.GameApiClient: DEBUG
-    com.valorrise.bot: INFO
+    com.valorrise.bot: DEBUG
 
 feign:
   client:
