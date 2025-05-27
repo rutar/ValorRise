@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -15,17 +14,42 @@ public class TaskSelectionService {
     private static final Logger logger = LoggerFactory.getLogger(TaskSelectionService.class);
     private static final Pattern BASE64_PATTERN = Pattern.compile("^[A-Za-z0-9+/=]+$");
 
-    public Advertisement selectBestTask(List<Advertisement> ads) {
-        if (ads == null || ads.isEmpty()) {
-            logger.warn("No advertisements available");
+    public Advertisement selectBestTask(List<Advertisement> advertisements) {
+        if (advertisements == null || advertisements.isEmpty()) {
+            logger.warn("No advertisements provided for task selection");
             return null;
         }
 
-        return ads.stream()
-                .map(this::decodeAdvertisement)
-                .filter(ad -> !isTrap(ad) && ad.getExpiresIn() > 0)
-                .max(Comparator.comparingDouble(this::calculateScore))
-                .orElse(null);
+        Advertisement bestAd = null;
+        double bestScore = -1;
+
+        for (Advertisement ad : advertisements) {
+            // Decode fields if encrypted
+            Advertisement decodedAd = decodeAdvertisement(ad);
+            // Skip traps
+            if (isTrap(decodedAd)) {
+                logger.debug("Skipping trap task: {}, probability: {}, reward: {}",
+                        decodedAd.getAdId(), decodedAd.getProbability(), decodedAd.getReward());
+                continue;
+            }
+
+
+            double score = decodedAd.getReward() * parseProbability(decodedAd.getProbability());
+
+            if (score > bestScore) {
+                bestScore = Math.round(score * 100.0) / 100.0;
+                bestAd = decodedAd;
+            }
+        }
+
+        if (bestAd != null) {
+            logger.debug("Selected task: {}, score: {}, reward: {}",
+                    bestAd.getAdId(), bestScore, bestAd.getReward());
+        } else {
+            logger.warn("No valid task selected");
+        }
+
+        return bestAd;
     }
 
     private Advertisement decodeAdvertisement(Advertisement ad) {
@@ -54,12 +78,15 @@ public class TaskSelectionService {
     }
 
     private String decodeField(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
         // Try Base64 first if it matches pattern
         if (BASE64_PATTERN.matcher(input).matches()) {
             try {
                 byte[] decodedBytes = Base64.getDecoder().decode(input);
                 String decoded = new String(decodedBytes);
-                // Check if result is readable (contains letters/spaces, not gibberish)
                 if (isReadable(decoded)) {
                     logger.debug("Base64 decoded: {} -> {}", input, decoded);
                     return decoded;
@@ -95,29 +122,29 @@ public class TaskSelectionService {
     }
 
     private boolean isReadable(String text) {
-        // Basic readability: contains letters/spaces, not just random chars
-        return text.matches(".*[a-zA-Z\\s].*") && !text.contains("\uFFFD");
+        return text != null && text.matches(".*[a-zA-Z\\s].*") && !text.contains("\uFFFD");
     }
 
     private boolean isTrap(Advertisement ad) {
         String probability = ad.getProbability().toLowerCase();
-        return probability.contains("suicide") || ad.getReward() < 10;
-    }
-
-    private double calculateScore(Advertisement ad) {
-        double probability = parseProbability(ad.getProbability());
-        return probability * ad.getReward() / (ad.getExpiresIn() + 1);
+        return probability.contains("suicide") ||
+                probability.contains("playingwithfire") ||
+                ad.getReward() < 5 ||
+                ad.getExpiresIn() <= 0;
     }
 
     private double parseProbability(String probability) {
         String normalized = probability.toLowerCase().replace(" ", "");
         return switch (normalized) {
-            case "pieceofcake" -> 1.0;
-            case "surething" -> 0.9;
-            case "walkinthepark" -> 0.8;
-            case "risky" -> 0.5;
-            case "playingwithfire" -> 0.3;
-            case "suicidemission" -> 0.1;
+            case "surething" -> 0.98;
+            case "pieceofcake" -> 0.96;
+            case "walkin" -> 0.87;
+            case "hmmm" -> 0.78;
+            case "quitely" -> 0.75;
+            case "gamble" -> 0.55;
+            case "risky" -> 0.46;
+            case "ratherdetrimental" -> 0.33;
+            case "playingwithfire" -> 0.25;
             default -> 0.1;
         };
     }
