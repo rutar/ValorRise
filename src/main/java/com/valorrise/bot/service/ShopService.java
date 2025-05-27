@@ -60,6 +60,7 @@ public class ShopService {
             if (game.getGold() >= healthPotion.getCost()) {
                 logger.info("Buying health potion for game: {}, cost: {}", game.getGameId(), healthPotion.getCost());
                 GameDto updatedGameDto = apiClient.buyItem(game.getGameId(), healthPotion.getId());
+                updatedGameDto.setGameId(game.getGameId());
                 return GameMapper.toEntity(updatedGameDto);
             } else {
                 logger.info("Insufficient gold for health potion: gameId={}, gold={}, cost={}",
