@@ -11,21 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdvertisementDto {
-    @JsonProperty("adId")
     private String adId;
-
-    @JsonProperty("message")
     private String message;
-
-    @JsonProperty("reward")
     private int reward;
-
-    @JsonProperty("expiresIn")
     private int expiresIn;
-
-    @JsonProperty("encrypted")
     private boolean encrypted;
-
-    @JsonProperty("probability")
     private String probability;
 }
