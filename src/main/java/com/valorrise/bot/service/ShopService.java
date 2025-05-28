@@ -36,7 +36,7 @@ public class ShopService {
         }
 
         if (game.getLives() >= minLivesToBuy || game.getGold() < minGoldToBuy) {
-            logger.info("No need to buy potion for game {}: lives={}, gold={}",
+            logger.debug("No need to buy potion for game {}: lives={}, gold={}",
                     game.getGameId(), game.getLives(), game.getGold());
             return game;
         }
@@ -68,12 +68,12 @@ public class ShopService {
             }
 
             if (game.getGold() >= targetItem.getCost() + minGoldToBuy) {
-                logger.info("Buying item {} for game: {}, cost: {}", itemId, game.getGameId(), targetItem.getCost());
+                logger.debug("Buying item {} for game: {}, cost: {}", itemId, game.getGameId(), targetItem.getCost());
                 GameDto updatedGameDto = apiClient.buyItem(game.getGameId(), targetItem.getId());
                 updatedGameDto.setGameId(game.getGameId());
                 return GameMapper.toEntity(updatedGameDto);
             } else {
-                logger.info("Insufficient gold for item {}: gameId={}, gold={}, cost={}, minGoldToBuy={}",
+                logger.debug("Insufficient gold for item {}: gameId={}, gold={}, cost={}, minGoldToBuy={}",
                         itemId, game.getGameId(), game.getGold(), targetItem.getCost(), minGoldToBuy);
                 return game;
             }
