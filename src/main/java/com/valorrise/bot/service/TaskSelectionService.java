@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -126,9 +127,18 @@ public class TaskSelectionService {
     }
 
     private boolean isTrap(Advertisement ad) {
-        String probability = ad.getProbability().toLowerCase();
-        return probability.contains("suicide") ||
-                probability.contains("playingwithfire") ||
+        String probability = ad.getProbability().toLowerCase().replaceAll("\\s", "");
+        List<String> validProbabilities = Arrays.asList(
+                "surething",
+                "pieceofcake",
+                "walkinthepark",
+                "hmmm....",
+                "quitelikely",
+                "gamble",
+                "risky",
+                "ratherdetrimental"
+        );
+        return !validProbabilities.contains(probability) ||
                 ad.getReward() < 5 ||
                 ad.getExpiresIn() <= 0;
     }
