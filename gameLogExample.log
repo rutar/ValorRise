@@ -1,0 +1,140 @@
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2025-05-28T10:36:43.335+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.ValorRiseApplication   : Starting ValorRiseApplication using Java 17.0.12 with PID 1700 (C:\Users\Dobry\IdeaProjects\ValorRise\build\classes\java\main started by Dobry in C:\Users\Dobry\IdeaProjects\ValorRise)
+2025-05-28T10:36:43.339+03:00 DEBUG 1700 --- [ValorRise] [           main] com.valorrise.bot.ValorRiseApplication   : Running with Spring Boot v3.3.4, Spring v6.1.13
+2025-05-28T10:36:43.340+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.ValorRiseApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-05-28T10:36:44.615+03:00  INFO 1700 --- [ValorRise] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ce3a6498-8564-3949-b416-ebb5b77dd2a3
+2025-05-28T10:36:44.955+03:00  INFO 1700 --- [ValorRise] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-05-28T10:36:44.971+03:00  INFO 1700 --- [ValorRise] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-28T10:36:44.971+03:00  INFO 1700 --- [ValorRise] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-05-28T10:36:45.062+03:00  INFO 1700 --- [ValorRise] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-28T10:36:45.063+03:00  INFO 1700 --- [ValorRise] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1651 ms
+2025-05-28T10:36:46.053+03:00  INFO 1700 --- [ValorRise] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-05-28T10:36:46.169+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.ValorRiseApplication   : Started ValorRiseApplication in 3.762 seconds (process running for 4.807)
+2025-05-28T10:36:46.173+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.GameRunner             : Starting Dragons of Mugloar game bot
+2025-05-28T10:36:47.445+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Started game: UBQkLhZQ, lives: 3, gold: 0
+2025-05-28T10:36:47.571+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: WDMjwOmb, probability: Walk in the park, reward: 3
+2025-05-28T10:36:47.572+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: r4GTz821, score: 37.95, reward: 69
+2025-05-28T10:36:48.268+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task r4GTz821, success: true, lives: 3, gold: 69, total score: 69
+2025-05-28T10:36:48.324+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: WDMjwOmb, probability: Walk in the park, reward: 3
+2025-05-28T10:36:48.324+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Jx33c5uY, probability: Sure thing, reward: 2
+2025-05-28T10:36:48.324+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: yHdgyxkZ, score: 9.6, reward: 10
+2025-05-28T10:36:49.032+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task yHdgyxkZ, success: true, lives: 3, gold: 79, total score: 79
+2025-05-28T10:36:49.106+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: WDMjwOmb, probability: Walk in the park, reward: 3
+2025-05-28T10:36:49.110+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Jx33c5uY, probability: Sure thing, reward: 2
+2025-05-28T10:36:49.111+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: GC3n8vph, score: 8.25, reward: 25
+2025-05-28T10:36:49.808+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task GC3n8vph, success: true, lives: 3, gold: 104, total score: 104
+2025-05-28T10:36:49.869+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: WDMjwOmb, probability: Walk in the park, reward: 3
+2025-05-28T10:36:49.873+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Jx33c5uY, probability: Sure thing, reward: 2
+2025-05-28T10:36:49.876+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: TfqJ5qnO, score: 8.82, reward: 9
+2025-05-28T10:36:50.553+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task TfqJ5qnO, success: true, lives: 3, gold: 113, total score: 113
+2025-05-28T10:36:50.613+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: WDMjwOmb, probability: Walk in the park, reward: 3
+2025-05-28T10:36:50.614+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Jx33c5uY, probability: Sure thing, reward: 2
+2025-05-28T10:36:50.616+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Z3qAcvm3, probability: Sure thing, reward: 3
+2025-05-28T10:36:50.616+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: jFX4jmW3, score: 6.9, reward: 69
+2025-05-28T10:36:51.290+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task jFX4jmW3, success: true, lives: 3, gold: 182, total score: 182
+2025-05-28T10:36:51.362+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Updated reputation for game UBQkLhZQ at turn 5: people=1.4, state=0.0, underworld=0.0
+2025-05-28T10:36:51.505+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item tricks for game: UBQkLhZQ, cost: 100
+2025-05-28T10:36:51.574+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought upgrade tricks, lives: 3, gold: 82
+2025-05-28T10:36:51.628+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Jx33c5uY, probability: Sure thing, reward: 2
+2025-05-28T10:36:51.629+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Z3qAcvm3, probability: Sure thing, reward: 3
+2025-05-28T10:36:51.630+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: RLoMz7lb, score: 17.82, reward: 54
+2025-05-28T10:36:52.341+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task RLoMz7lb, success: false, lives: 2, gold: 82, total score: 182
+2025-05-28T10:36:52.342+03:00  WARN 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Task failed: You failed on the mission!
+2025-05-28T10:36:52.383+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Insufficient gold for item hpot: gameId=UBQkLhZQ, gold=82, cost=50, minGoldToBuy=50
+2025-05-28T10:36:52.384+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought healing potion, lives: 2, gold: 82
+2025-05-28T10:36:52.434+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Z3qAcvm3, probability: Sure thing, reward: 3
+2025-05-28T10:36:52.435+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: 0sB5hgmN, score: 72.96, reward: 76
+2025-05-28T10:36:53.103+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task 0sB5hgmN, success: true, lives: 2, gold: 158, total score: 258
+2025-05-28T10:36:53.162+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item hpot for game: UBQkLhZQ, cost: 50
+2025-05-28T10:36:53.219+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought healing potion, lives: 3, gold: 108
+2025-05-28T10:36:53.271+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Z3qAcvm3, probability: Sure thing, reward: 3
+2025-05-28T10:36:53.273+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: nlmnw6SH, score: 34.56, reward: 36
+2025-05-28T10:36:53.965+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task nlmnw6SH, success: true, lives: 3, gold: 144, total score: 294
+2025-05-28T10:36:54.035+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: w3CknhDL, score: 65.28, reward: 68
+2025-05-28T10:36:54.748+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task w3CknhDL, success: true, lives: 3, gold: 212, total score: 362
+2025-05-28T10:36:54.829+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: 575rwGGA, score: 74.48, reward: 76
+2025-05-28T10:36:55.532+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task 575rwGGA, success: true, lives: 3, gold: 288, total score: 438
+2025-05-28T10:36:55.596+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: 6GH2ojW5, score: 31.9, reward: 58
+2025-05-28T10:36:56.352+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task 6GH2ojW5, success: false, lives: 2, gold: 288, total score: 438
+2025-05-28T10:36:56.352+03:00  WARN 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Task failed: You failed on the mission!
+2025-05-28T10:36:56.410+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item hpot for game: UBQkLhZQ, cost: 50
+2025-05-28T10:36:56.463+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought healing potion, lives: 3, gold: 238
+2025-05-28T10:36:56.544+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: 1BEKMn07, score: 13.2, reward: 24
+2025-05-28T10:36:57.241+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task 1BEKMn07, success: false, lives: 2, gold: 238, total score: 438
+2025-05-28T10:36:57.241+03:00  WARN 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Task failed: You failed on the mission!
+2025-05-28T10:36:57.302+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item hpot for game: UBQkLhZQ, cost: 50
+2025-05-28T10:36:57.361+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought healing potion, lives: 3, gold: 188
+2025-05-28T10:36:57.427+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: wuuGO12g, score: 11.96, reward: 26
+2025-05-28T10:36:58.128+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task wuuGO12g, success: true, lives: 3, gold: 214, total score: 464
+2025-05-28T10:36:58.200+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: cWgyOWlFSGk= -> qh29iEHi
+2025-05-28T10:36:58.200+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW52ZXN0aWdhdGUgJ2V6cmEnIEF0dGViZXJyeSBhbmQgZmluZCBvdXQgdGhlaXIgcmVsYXRpb24gdG8gdGhlIG1hZ2ljIHNxdWlycmVsLg== -> Investigate 'ezra' Atteberry and find out their relation to the magic squirrel.
+2025-05-28T10:36:58.200+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: UGxheWluZyB3aXRoIGZpcmU= -> Playing with fire
+2025-05-28T10:36:58.200+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: qh29iEHi, probability: Playing with fire, reward: 164
+2025-05-28T10:36:58.200+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: Al9QvaDG, score: 7.6, reward: 76
+2025-05-28T10:36:59.004+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task Al9QvaDG, success: true, lives: 3, gold: 290, total score: 540
+2025-05-28T10:36:59.075+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: cWgyOWlFSGk= -> qh29iEHi
+2025-05-28T10:36:59.077+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW52ZXN0aWdhdGUgJ2V6cmEnIEF0dGViZXJyeSBhbmQgZmluZCBvdXQgdGhlaXIgcmVsYXRpb24gdG8gdGhlIG1hZ2ljIHNxdWlycmVsLg== -> Investigate 'ezra' Atteberry and find out their relation to the magic squirrel.
+2025-05-28T10:36:59.078+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: UGxheWluZyB3aXRoIGZpcmU= -> Playing with fire
+2025-05-28T10:36:59.079+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: qh29iEHi, probability: Playing with fire, reward: 164
+2025-05-28T10:36:59.080+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SHY3aFZQcWs= -> Hv7hVPqk
+2025-05-28T10:36:59.081+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW5maWx0cmF0ZSBUaGUgTWVuIE9mIExpbWJvIGFuZCByZWNvdmVyIHRoZWlyIHNlY3JldHMu -> Infiltrate The Men Of Limbo and recover their secrets.
+2025-05-28T10:36:59.082+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: U3VpY2lkZSBtaXNzaW9u -> Suicide mission
+2025-05-28T10:36:59.083+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: Hv7hVPqk, probability: Suicide mission, reward: 173
+2025-05-28T10:36:59.083+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: BzMtU6uw, score: 6.93, reward: 21
+2025-05-28T10:36:59.987+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task BzMtU6uw, success: false, lives: 2, gold: 290, total score: 540
+2025-05-28T10:36:59.988+03:00  WARN 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Task failed: You failed on the mission!
+2025-05-28T10:37:00.056+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Updated reputation for game UBQkLhZQ at turn 20: people=4.7, state=-6.0, underworld=0.0
+2025-05-28T10:37:00.107+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item hpot for game: UBQkLhZQ, cost: 50
+2025-05-28T10:37:00.153+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought healing potion, lives: 3, gold: 240
+2025-05-28T10:37:00.200+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Insufficient gold for item mtrix: gameId=UBQkLhZQ, gold=240, cost=300, minGoldToBuy=50
+2025-05-28T10:37:00.201+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought upgrade mtrix, lives: 3, gold: 240
+2025-05-28T10:37:00.250+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: LdyYxPCp, probability: Playing with fire, reward: 26
+2025-05-28T10:37:00.251+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: anJHOGh5V08= -> jrG8hyWO
+2025-05-28T10:37:00.251+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW5maWx0cmF0ZSBUaGUgUm95YWwgU2hhcmt0ZWV0aCBhbmQgcmVjb3ZlciB0aGVpciBzZWNyZXRzLg== -> Infiltrate The Royal Sharkteeth and recover their secrets.
+2025-05-28T10:37:00.251+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: U3VpY2lkZSBtaXNzaW9u -> Suicide mission
+2025-05-28T10:37:00.251+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: jrG8hyWO, probability: Suicide mission, reward: 167
+2025-05-28T10:37:00.252+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: 2bbgXayx, score: 104.64, reward: 109
+2025-05-28T10:37:00.960+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task 2bbgXayx, success: true, lives: 3, gold: 349, total score: 649
+2025-05-28T10:37:01.002+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item cs for game: UBQkLhZQ, cost: 100
+2025-05-28T10:37:01.045+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought upgrade cs, lives: 3, gold: 249
+2025-05-28T10:37:01.105+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: wbYwDjca, score: 117.12, reward: 122
+2025-05-28T10:37:01.788+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task wbYwDjca, success: true, lives: 3, gold: 371, total score: 771
+2025-05-28T10:37:01.849+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Updated reputation for game UBQkLhZQ at turn 25: people=4.7, state=-6.0, underworld=0.0
+2025-05-28T10:37:01.912+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item gas for game: UBQkLhZQ, cost: 100
+2025-05-28T10:37:01.965+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought upgrade gas, lives: 3, gold: 271
+2025-05-28T10:37:02.015+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SlY0cllsdnM= -> JV4rYlvs
+2025-05-28T10:37:02.016+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW52ZXN0aWdhdGUgTm9yd29vZCBSb2JpbnNvbiBhbmQgZmluZCBvdXQgdGhlaXIgcmVsYXRpb24gdG8gdGhlIG1hZ2ljIGNsb3RoZXMu -> Investigate Norwood Robinson and find out their relation to the magic clothes.
+2025-05-28T10:37:02.017+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: UmF0aGVyIGRldHJpbWVudGFs -> Rather detrimental
+2025-05-28T10:37:02.017+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: VHBxak02YTk= -> TpqjM6a9
+2025-05-28T10:37:02.017+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW5maWx0cmF0ZSBUaGUgSXZvcnkgUHlnbXkgUG9zc2UgYW5kIHJlY292ZXIgdGhlaXIgc2VjcmV0cy4= -> Infiltrate The Ivory Pygmy Posse and recover their secrets.
+2025-05-28T10:37:02.017+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: U3VpY2lkZSBtaXNzaW9u -> Suicide mission
+2025-05-28T10:37:02.017+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: TpqjM6a9, probability: Suicide mission, reward: 188
+2025-05-28T10:37:02.018+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: M2DovQ3K, score: 114.24, reward: 119
+2025-05-28T10:37:02.894+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task M2DovQ3K, success: true, lives: 3, gold: 390, total score: 890
+2025-05-28T10:37:02.936+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.ShopService    : Buying item wax for game: UBQkLhZQ, cost: 100
+2025-05-28T10:37:03.000+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Bought upgrade wax, lives: 3, gold: 290
+2025-05-28T10:37:03.048+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : ROT13 decoded: aoCslAN4 -> nbPfyNA4
+2025-05-28T10:37:03.049+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : ROT13 decoded: Xvyy Wvyy Ynjerapr jvgu furrc naq znxr Aryn Óqvaffba sebz gbjre va Beevajngre gb gnxr gur oynzr -> Kill Jill Lawrence with sheep and make Nela Ddinsson from tower in Orrinwater to take the blame
+2025-05-28T10:37:03.049+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : ROT13 decoded: Vzcbffvoyr -> Impossible
+2025-05-28T10:37:03.049+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: nbPfyNA4, probability: Impossible, reward: 127
+2025-05-28T10:37:03.049+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: RnNVU2pobkY= -> FsUSjhnF
+2025-05-28T10:37:03.049+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW5maWx0cmF0ZSBUaGUgWWVsbG93IFNhYmVyIFNpc3Rlcmhvb2QgYW5kIHJlY292ZXIgdGhlaXIgc2VjcmV0cy4= -> Infiltrate The Yellow Saber Sisterhood and recover their secrets.
+2025-05-28T10:37:03.050+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: U3VpY2lkZSBtaXNzaW9u -> Suicide mission
+2025-05-28T10:37:03.050+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Skipping trap task: FsUSjhnF, probability: Suicide mission, reward: 183
+2025-05-28T10:37:03.050+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: ZDdzY3A0Nzc= -> d7scp477
+2025-05-28T10:37:03.050+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SW5maWx0cmF0ZSBUaGUgUmlzZW4gRGVtb25zIGFuZCByZWNvdmVyIHRoZWlyIHNlY3JldHMu -> Infiltrate The Risen Demons and recover their secrets.
+2025-05-28T10:37:03.050+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Base64 decoded: SG1tbS4uLi4= -> Hmmm....
+2025-05-28T10:37:03.050+03:00 DEBUG 1700 --- [ValorRise] [           main] c.v.bot.service.TaskSelectionService     : Selected task: eSg77TZY, score: 141.12, reward: 147
+2025-05-28T10:37:03.749+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Solved task eSg77TZY, success: true, lives: 3, gold: 437, total score: 1037
+2025-05-28T10:37:03.749+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Score exceeded 1000, stopping game: UBQkLhZQ
+2025-05-28T10:37:03.749+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Game over for game: UBQkLhZQ, final score: 1037
+2025-05-28T10:37:03.749+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.service.GameService    : Game statistics: steps (turns): 30, tasks completed: 15, tasks failed: 4, total rewards earned: 1037, total gold earned: 437, items purchased: 10, final reputation: people=4.7, state=-6.0, underworld=0.0
+2025-05-28T10:37:03.750+03:00  INFO 1700 --- [ValorRise] [           main] com.valorrise.bot.GameRunner             : Game execution completed
