@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -48,7 +49,6 @@ class GameServiceTest {
     private Game game;
     private Advertisement advertisement;
     private SolveResponseDto solveResponseDto;
-    private SolveResponse solveResponse;
     private ReputationDto reputationDto;
     private Reputation reputation;
 
@@ -81,7 +81,7 @@ class GameServiceTest {
         solveResponseDto.setTurn(2);
         solveResponseDto.setMessage("Success");
 
-        solveResponse = new SolveResponse();
+        SolveResponse solveResponse = new SolveResponse();
         solveResponse.setSuccess(true);
         solveResponse.setLives(4);
         solveResponse.setGold(250);
@@ -108,6 +108,7 @@ class GameServiceTest {
         @DisplayName("Should successfully complete a game with normal flow")
         void shouldSuccessfullyCompleteGame() throws GameApiException {
             // Given
+            gameDto.setTurn(5);
             when(apiClient.startGame()).thenReturn(gameDto);
             when(shopService.buyItem(any(Game.class), anyString())).thenReturn(game);
             when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Collections.singletonList(advertisement));
@@ -168,10 +169,9 @@ class GameServiceTest {
 
             when(apiClient.startGame()).thenReturn(lowLivesGameDto);
             when(shopService.buyHealthPotionIfNeeded(any(Game.class))).thenReturn(updatedGame);
-            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Arrays.asList(advertisement));
+            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Collections.singletonList(advertisement));
             when(taskSelectionService.selectBestTask(anyList())).thenReturn(advertisement);
             when(apiClient.solveAdvertisement("test-game-123", "test-ad-123=")).thenReturn(solveResponseDto);
-            when(apiClient.getReputation("test-game-123")).thenReturn(reputationDto);
 
             // Configure to end game after one iteration
             SolveResponseDto endGameResponse = new SolveResponseDto();
@@ -189,9 +189,10 @@ class GameServiceTest {
         @DisplayName("Should stop game when score exceeds 1000")
         void shouldStopGameWhenScoreExceeds1000() throws GameApiException {
             // Given
+            gameDto.setTurn(5);
             when(apiClient.startGame()).thenReturn(gameDto);
             when(shopService.buyItem(any(Game.class), anyString())).thenReturn(game);
-            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Arrays.asList(advertisement));
+            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Collections.singletonList(advertisement));
             when(taskSelectionService.selectBestTask(anyList())).thenReturn(advertisement);
             when(apiClient.getReputation("test-game-123")).thenReturn(reputationDto);
 
@@ -217,12 +218,13 @@ class GameServiceTest {
         @DisplayName("Should handle 404 error and end game")
         void shouldHandle404ErrorAndEndGame() throws GameApiException {
             // Given
+            gameDto.setTurn(5);
             try (MockedStatic<ReputationMapper> mockedStatic = mockStatic(ReputationMapper.class)) {
                 when(apiClient.startGame()).thenReturn(gameDto);
                 when(shopService.buyItem(any(Game.class), anyString())).thenReturn(game);
                 when(apiClient.getReputation("test-game-123")).thenReturn(reputationDto);
                 mockedStatic.when(() -> ReputationMapper.toEntity(any(ReputationDto.class))).thenReturn(reputation);
-                when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Arrays.asList(advertisement));
+                when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Collections.singletonList(advertisement));
                 when(taskSelectionService.selectBestTask(anyList())).thenReturn(advertisement);
                 when(apiClient.solveAdvertisement("test-game-123", "test-ad-123="))
                         .thenThrow(new GameApiException("Game not found", 404));
@@ -240,6 +242,7 @@ class GameServiceTest {
         @DisplayName("Should handle no valid advertisements")
         void shouldHandleNoValidAdvertisements() throws GameApiException {
             // Given
+            gameDto.setTurn(5);
             try (MockedStatic<ReputationMapper> mockedStatic = mockStatic(ReputationMapper.class)) {
                 when(apiClient.startGame()).thenReturn(gameDto);
                 when(shopService.buyItem(any(Game.class), anyString())).thenReturn(game);
@@ -262,6 +265,7 @@ class GameServiceTest {
         @DisplayName("Should buy upgrade items when conditions are met")
         void shouldBuyUpgradeItemsWhenConditionsMet() throws GameApiException {
             // Given
+            gameDto.setTurn(5);
             GameDto richGameDto = new GameDto();
             richGameDto.setGameId("test-game-123");
             richGameDto.setLives(5);
@@ -278,9 +282,8 @@ class GameServiceTest {
 
             when(apiClient.startGame()).thenReturn(richGameDto);
             when(shopService.buyItem(any(Game.class), anyString())).thenReturn(updatedGame);
-            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Arrays.asList(advertisement));
+            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Collections.singletonList(advertisement));
             when(taskSelectionService.selectBestTask(anyList())).thenReturn(advertisement);
-            when(apiClient.getReputation("test-game-123")).thenReturn(reputationDto);
 
             // Configure to end game after one iteration
             SolveResponseDto endGameResponse = new SolveResponseDto();
@@ -313,7 +316,7 @@ class GameServiceTest {
             goodReputation.setUnderworld(5.0f);
 
             // When
-            String result = invokeSelectUpgradeItem(poorGame, purchasedUpgrades, 0, 5, goodReputation);
+            String result = invokeSelectUpgradeItem(poorGame, purchasedUpgrades, goodReputation);
 
             // Then
             assertNull(result);
@@ -333,7 +336,7 @@ class GameServiceTest {
             lowStateReputation.setUnderworld(5.0f);
 
             // When
-            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, 0, 5, lowStateReputation);
+            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, lowStateReputation);
 
             // Then
             assertEquals("tricks", result);
@@ -353,7 +356,7 @@ class GameServiceTest {
             lowUnderworldReputation.setUnderworld(2.0f);
 
             // When
-            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, 0, 5, lowUnderworldReputation);
+            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, lowUnderworldReputation);
 
             // Then
             assertEquals("cs", result);
@@ -373,7 +376,7 @@ class GameServiceTest {
             lowPeopleReputation.setUnderworld(5.0f);
 
             // When
-            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, 0, 5, lowPeopleReputation);
+            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, lowPeopleReputation);
 
             // Then
             assertEquals("wingpot", result);
@@ -393,7 +396,7 @@ class GameServiceTest {
             goodReputation.setUnderworld(5.0f);
 
             // When
-            String result = invokeSelectUpgradeItem(earlyGame, purchasedUpgrades, 0, 5, goodReputation);
+            String result = invokeSelectUpgradeItem(earlyGame, purchasedUpgrades, goodReputation);
 
             // Then
             assertNotNull(result);
@@ -416,7 +419,7 @@ class GameServiceTest {
             goodReputation.setUnderworld(5.0f);
 
             // When
-            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, 0, 5, goodReputation);
+            String result = invokeSelectUpgradeItem(game, purchasedUpgrades, goodReputation);
 
             // Then
             assertNull(result);
@@ -424,13 +427,12 @@ class GameServiceTest {
 
         // Helper method to invoke private selectUpgradeItem method
         private String invokeSelectUpgradeItem(Game game, boolean[] purchasedUpgrades,
-                                               int tasksFailed, int tasksCompleted,
                                                Reputation reputation) throws Exception {
             var method = GameService.class.getDeclaredMethod("selectUpgradeItem",
                     Game.class, boolean[].class, int.class, int.class, Reputation.class);
             method.setAccessible(true);
             return (String) method.invoke(gameService, game, purchasedUpgrades,
-                    tasksFailed, tasksCompleted, reputation);
+                    0, 5, reputation);
         }
     }
 
@@ -443,9 +445,10 @@ class GameServiceTest {
         void shouldHandleReputationFetchFailure() throws GameApiException {
 
             // Given
+            gameDto.setTurn(5);
             when(apiClient.startGame()).thenReturn(gameDto);
             when(shopService.buyItem(any(Game.class), anyString())).thenReturn(game);
-            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Arrays.asList(advertisement));
+            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Collections.singletonList(advertisement));
             when(taskSelectionService.selectBestTask(anyList())).thenReturn(advertisement);
             when(apiClient.getReputation("test-game-123")).thenThrow(new GameApiException( "Server Error", 500));
 
@@ -464,13 +467,14 @@ class GameServiceTest {
         void shouldDecodeUrlEncodedAdvertisementIds() throws GameApiException {
 
             // Given
+            gameDto.setTurn(5);
             Advertisement encodedAd = new Advertisement();
             encodedAd.setAdId("test-ad-123%3D%26special");
             encodedAd.setReward(50);
 
             when(apiClient.startGame()).thenReturn(gameDto);
             when(shopService.buyItem(any(Game.class), anyString())).thenReturn(game);
-            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(Arrays.asList(encodedAd));
+            when(gameApiService.getAdvertisements("test-game-123")).thenReturn(List.of(encodedAd));
             when(taskSelectionService.selectBestTask(anyList())).thenReturn(encodedAd);
             when(apiClient.getReputation("test-game-123")).thenReturn(reputationDto);
 
