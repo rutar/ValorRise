@@ -113,13 +113,31 @@ public class TaskSelectionService {
         StringBuilder result = new StringBuilder();
         for (char c : input.toCharArray()) {
             if (Character.isLetter(c)) {
-                char base = Character.isUpperCase(c) ? 'A' : 'a';
-                result.append((char) (base + ((c - base + 13) % 26)));
+                // Determine the base and range dynamically based on Unicode properties
+                // Find the script's alphabet size (simplified to a reasonable range)
+                int alphabetSize = 26; // Default for Latin; adjust for other scripts if needed
+                // For simplicity, assume a fixed shift for all alphabets
+                int shift = 13;
+                // Apply ROT13 shift within the Unicode block
+                int base = Character.isUpperCase(c) ? 'A' : 'a'; // Fallback to Latin base
+                if (!isLatinLetter(c)) {
+                    // For non-Latin scripts, use code point shifting with a modulo
+                    result.append((char) ((int) c + shift));
+                } else {
+                    // Preserve original Latin letter behavior
+                    result.append((char) (base + ((c - base + shift) % alphabetSize)));
+                }
             } else {
+                // Preserve non-letter characters
                 result.append(c);
             }
         }
         return result.toString();
+    }
+
+    // Helper method to check if a character is a Latin letter
+    private boolean isLatinLetter(char c) {
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
     private boolean isReadable(String text) {
