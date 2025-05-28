@@ -50,7 +50,8 @@ public class GameService {
             GameDto gameDto = apiClient.startGame();
             Game game = GameMapper.toEntity(gameDto);
             assert game != null;
-            logger.info("Started game: {}, lives: {}, gold: {}", game.getGameId(), game.getLives(), game.getGold());
+            logger.info("🎮 New Adventure Begins! Game ID: {}, Lives: ❤️ {}, Gold: 💰 {}",
+                    game.getGameId(), game.getLives(), game.getGold());
 
             // Statistics tracking
             int tasksCompleted = 0;
@@ -69,11 +70,11 @@ public class GameService {
                     if (game.getTurn() % 5 == 0 && game.getTurn() > 0) {
                         try {
                             finalReputation = ReputationMapper.toEntity(apiClient.getReputation(game.getGameId()));
-                            logger.info("Updated reputation for game {} at turn {}: people={}, state={}, underworld={}",
-                                    game.getGameId(), game.getTurn(), finalReputation.getPeople(),
+                            logger.info("📊 Reputation Check at Turn {} for Game {}: People: 😊 {}, State: 🏰 {}, Underworld: 👹 {}",
+                                    game.getTurn(), game.getGameId(), finalReputation.getPeople(),
                                     finalReputation.getState(), finalReputation.getUnderworld());
                         } catch (GameApiException e) {
-                            logger.warn("Failed to fetch reputation for game {} at turn {}: {}",
+                            logger.warn("⚠️ Failed to fetch reputation for Game {} at Turn {}: {}",
                                     game.getGameId(), game.getTurn(), e.getMessage());
                         }
                     }
@@ -82,10 +83,11 @@ public class GameService {
                     if (game.getLives() <= 2 && game.getGold() >= 50) {
                         game = shopService.buyHealthPotionIfNeeded(game);
                         itemsPurchased++;
-                        logger.info("Bought healing potion, lives: {}, gold: {}", game.getLives(), game.getGold());
+                        logger.info("🧪 Purchased Healing Potion! Lives: ❤️ {}, Gold: 💰 {}",
+                                game.getLives(), game.getGold());
                     }
                     if (game.getLives() <= 0) {
-                        logger.info("Game over after buying potion: lives={}", game.getLives());
+                        logger.info("💀 Game Over after potion purchase: Lives: ❤️ {}", game.getLives());
                         break;
                     }
 
@@ -93,31 +95,43 @@ public class GameService {
                     if (game.getLives() >= 3 && game.getGold() >= 150) {
                         String itemToBuy = selectUpgradeItem(game, purchasedUpgrades, tasksFailed, tasksCompleted, finalReputation);
                         if (itemToBuy != null) {
-                            game = shopService.buyItem(game, itemToBuy);
-                            itemsPurchased++;
-                            int itemIndex = UPGRADE_ITEMS.indexOf(itemToBuy);
-                            purchasedUpgrades[itemIndex] = true;
-                            logger.info("Bought upgrade {}, lives: {}, gold: {}", itemToBuy, game.getLives(), game.getGold());
+                            int goldBefore = game.getGold();
+                            Game updatedGame = shopService.buyItem(game, itemToBuy);
+                            if (updatedGame.getGold() < goldBefore) { // Verify purchase
+                                itemsPurchased++;
+                                int itemIndex = UPGRADE_ITEMS.indexOf(itemToBuy);
+                                purchasedUpgrades[itemIndex] = true;
+                                logger.info("🛡️ Upgraded with {}! Lives: ❤️ {}, Gold: 💰 {}",
+                                        itemToBuy, updatedGame.getLives(), updatedGame.getGold());
+                                game = updatedGame;
+                            } else {
+                                logger.info("🛑 Failed to buy upgrade {}: insufficient gold or error", itemToBuy);
+                            }
                         }
                     }
+
 
                     // Fetch and select task
                     Advertisement bestAd = taskSelectionService.selectBestTask(
                             gameApiService.getAdvertisements(game.getGameId()));
                     if (bestAd == null) {
-                        logger.warn("No valid advertisements for game: {}", game.getGameId());
+                        logger.warn("🚫 No valid tasks available for Game: {}", game.getGameId());
                         break;
                     }
 
-                    // Decode adId to handle URL-encoded characters (e.g., %3D → =)
+                    // Decode adId to handle URL-encoded characters
                     String decodedAdId = URLDecoder.decode(bestAd.getAdId(), StandardCharsets.UTF_8);
+
+                    // Log the chosen advertisement's name and ID
+                    logger.info("📜 Selected Task: '{}' (ID: {})", bestAd.getMessage(), decodedAdId);
 
                     // Solve task
                     SolveResponseDto responseDto = apiClient.solveAdvertisement(game.getGameId(), decodedAdId);
                     SolveResponse response = SolveResponseMapper.toEntity(responseDto);
                     assert response != null;
-                    logger.info("Solved task {}, success: {}, lives: {}, gold: {}, total score: {}",
-                            decodedAdId, response.isSuccess(), response.getLives(), response.getGold(), response.getScore());
+                    logger.info("🎯 Task '{}' (ID: {}) Attempted! Success: {}, Lives: ❤️ {}, Gold: 💰 {}, Score: 🏆 {}",
+                            bestAd.getMessage(), decodedAdId, response.isSuccess() ? "✅ Yes" : "❌ No",
+                            response.getLives(), response.getGold(), response.getScore());
 
                     // Update game state
                     game.setLives(response.getLives());
@@ -131,34 +145,44 @@ public class GameService {
                         totalRewards += bestAd.getReward();
                     } else {
                         tasksFailed++;
-                        logger.warn("Task failed: {}", response.getMessage());
+                        logger.warn("😓 Task '{}' (ID: {}) Failed: {}",
+                                bestAd.getMessage(), decodedAdId, response.getMessage());
                     }
 
                     // Check if score exceeds 1000
                     if (game.getScore() > 1000) {
-                        logger.info("Score exceeded 1000, stopping game: {}", game.getGameId());
+                        logger.info("🏅 Victory! Score exceeded 1000 for Game: {}", game.getGameId());
                         break;
                     }
                 } catch (GameApiException e) {
-                    logger.error("API error for game {}: status={}, message={}",
+                    logger.error("🚨 API Error for Game {}: Status={}, Message={}",
                             game.getGameId(), e.getStatus(), e.getMessage());
                     if (e.getStatus() == 404) {
-                        logger.info("Game {} not found, ending game", game.getGameId());
+                        logger.info("💀 Game {} not found, ending adventure", game.getGameId());
                         break;
                     }
                     // Continue loop for transient errors (handled by Resilience4j)
                 }
             }
 
-            // Log final statistics
-            logger.info("Game over for game: {}, final score: {}",
+            // Log final statistics in a tabulated format
+            logger.info("🏁 Game Over for Game: {} | Final Score: 🏆 {}",
                     game.getGameId(), game.getScore());
-            logger.info("Game statistics: steps (turns): {}, tasks completed: {}, tasks failed: {}, total rewards earned: {}, total gold earned: {}, items purchased: {}, " +
-                            "final reputation: people={}, state={}, underworld={}",
+            logger.info("""
+                            📈 Final Statistics:
+                              Turns Taken: {}
+                              Tasks Completed: ✅ {}
+                              Tasks Failed: ❌ {}
+                              Total Rewards: 💰 {}
+                              Gold Remaining: 💰 {}
+                              Items Purchased: 🛍️ {}
+                              Reputation: People 😊 {} | State 🏰 {} | Underworld 👹 {}""",
                     game.getTurn(), tasksCompleted, tasksFailed, totalRewards, game.getGold(), itemsPurchased,
                     finalReputation.getPeople(), finalReputation.getState(), finalReputation.getUnderworld());
+
         } catch (GameApiException e) {
-            logger.error("Failed to start game: status={}, message={}", e.getStatus(), e.getMessage());
+            logger.error("🚫 Failed to start adventure: Status={}, Message={}",
+                    e.getStatus(), e.getMessage());
         }
     }
 
