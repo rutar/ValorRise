@@ -1,6 +1,5 @@
 package com.valorrise.bot.api.client;
 
-import com.valorrise.bot.model.domain.Reputation;
 import com.valorrise.bot.model.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
