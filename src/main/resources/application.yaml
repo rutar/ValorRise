@@ -14,6 +14,9 @@ logging:
   level:
     com.valorrise.bot.api.client.GameApiClient: DEBUG
     com.valorrise.bot: DEBUG
+    com.valorrise.bot.service.GameService: DEBUG
+    com.valorrise.bot.service.TaskSelectionService: INFO
+    com.valorrise.bot.service.ShopService: INFO
 
 feign:
   client:
