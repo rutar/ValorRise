@@ -4,9 +4,9 @@ import com.valorrise.bot.api.client.GameApiClient;
 import com.valorrise.bot.exception.GameApiException;
 import com.valorrise.bot.model.domain.Advertisement;
 import com.valorrise.bot.model.domain.Game;
+import com.valorrise.bot.model.domain.Reputation;
 import com.valorrise.bot.model.domain.SolveResponse;
 import com.valorrise.bot.model.dto.GameDto;
-import com.valorrise.bot.model.domain.Reputation;
 import com.valorrise.bot.model.dto.SolveResponseDto;
 import com.valorrise.bot.model.mapper.GameMapper;
 import com.valorrise.bot.model.mapper.ReputationMapper;
@@ -49,6 +49,7 @@ public class GameService {
             // Start a new game
             GameDto gameDto = apiClient.startGame();
             Game game = GameMapper.toEntity(gameDto);
+            assert game != null;
             logger.info("Started game: {}, lives: {}, gold: {}", game.getGameId(), game.getLives(), game.getGold());
 
             // Statistics tracking
@@ -64,6 +65,18 @@ public class GameService {
             // Game loop
             while (game.getLives() > 0) {
                 try {
+                    // Update reputation every 5 turns
+                    if (game.getTurn() % 5 == 0 && game.getTurn() > 0) {
+                        try {
+                            finalReputation = ReputationMapper.toEntity(apiClient.getReputation(game.getGameId()));
+                            logger.info("Updated reputation for game {} at turn {}: people={}, state={}, underworld={}",
+                                    game.getGameId(), game.getTurn(), finalReputation.getPeople(),
+                                    finalReputation.getState(), finalReputation.getUnderworld());
+                        } catch (GameApiException e) {
+                            logger.warn("Failed to fetch reputation for game {} at turn {}: {}",
+                                    game.getGameId(), game.getTurn(), e.getMessage());
+                        }
+                    }
 
                     // Buy health potion if lives are low
                     if (game.getLives() <= 2 && game.getGold() >= 50) {
@@ -102,6 +115,7 @@ public class GameService {
                     // Solve task
                     SolveResponseDto responseDto = apiClient.solveAdvertisement(game.getGameId(), decodedAdId);
                     SolveResponse response = SolveResponseMapper.toEntity(responseDto);
+                    assert response != null;
                     logger.info("Solved task {}, success: {}, lives: {}, gold: {}, total score: {}",
                             decodedAdId, response.isSuccess(), response.getLives(), response.getGold(), response.getScore());
 
@@ -134,17 +148,6 @@ public class GameService {
                     }
                     // Continue loop for transient errors (handled by Resilience4j)
                 }
-            }
-
-            // Check reputation
-            try {
-                finalReputation = ReputationMapper.toEntity(apiClient.getReputation(game.getGameId()));
-                logger.info("Updated reputation for game {} at turn {}: people={}, state={}, underworld={}",
-                        game.getGameId(), game.getTurn(), finalReputation.getPeople(),
-                        finalReputation.getState(), finalReputation.getUnderworld());
-            } catch (GameApiException e) {
-                logger.warn("Failed to fetch reputation for game {} at turn {}: {}",
-                        game.getGameId(), game.getTurn(), e.getMessage());
             }
 
             // Log final statistics
