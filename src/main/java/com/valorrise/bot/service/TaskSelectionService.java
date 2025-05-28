@@ -148,9 +148,9 @@ public class TaskSelectionService {
         return switch (normalized) {
             case "surething" -> 0.98;
             case "pieceofcake" -> 0.96;
-            case "walkin" -> 0.87;
-            case "hmmm" -> 0.78;
-            case "quitely" -> 0.75;
+            case "walkinthepark" -> 0.87;
+            case "hmmm...." -> 0.78;
+            case "quitelikely" -> 0.75;
             case "gamble" -> 0.55;
             case "risky" -> 0.46;
             case "ratherdetrimental" -> 0.33;

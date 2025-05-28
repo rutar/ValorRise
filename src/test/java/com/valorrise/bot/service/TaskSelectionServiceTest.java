@@ -65,7 +65,7 @@ class TaskSelectionServiceTest {
     void selectBestTask_withMultipleAds_selectsHighestScore() {
         // Given
         Advertisement ad1 = createAdvertisement("AD001", "Low reward", 50.0, 3600, false, "surething"); // score: 49
-        Advertisement ad2 = createAdvertisement("AD002", "High reward", 200.0, 3600, false, "walkin"); // score: 174
+        Advertisement ad2 = createAdvertisement("AD002", "High reward", 200.0, 3600, false, "walkinthepark"); // score: 174
         Advertisement ad3 = createAdvertisement("AD003", "Medium reward", 100.0, 3600, false, "gamble"); // score: 55
         List<Advertisement> ads = Arrays.asList(ad1, ad2, ad3);
 
@@ -196,9 +196,9 @@ class TaskSelectionServiceTest {
         // Test all probability mappings
         assertEquals(0.98, getParsedProbability("surething"));
         assertEquals(0.96, getParsedProbability("pieceofcake"));
-        assertEquals(0.87, getParsedProbability("walkin"));
-        assertEquals(0.78, getParsedProbability("hmmm"));
-        assertEquals(0.75, getParsedProbability("quitely"));
+        assertEquals(0.87, getParsedProbability("walkinthepark"));
+        assertEquals(0.78, getParsedProbability("hmmm...."));
+        assertEquals(0.75, getParsedProbability("quitelikely"));
         assertEquals(0.55, getParsedProbability("gamble"));
         assertEquals(0.46, getParsedProbability("risky"));
         assertEquals(0.33, getParsedProbability("ratherdetrimental"));
@@ -209,14 +209,14 @@ class TaskSelectionServiceTest {
     void parseProbability_caseInsensitive() {
         assertEquals(0.98, getParsedProbability("SURETHING"));
         assertEquals(0.96, getParsedProbability("PieceOfCake"));
-        assertEquals(0.87, getParsedProbability("WalkIn"));
+        assertEquals(0.87, getParsedProbability("WalkInThePark"));
     }
 
     @Test
     void parseProbability_ignoresSpaces() {
         assertEquals(0.98, getParsedProbability("sure thing"));
         assertEquals(0.96, getParsedProbability("piece of cake"));
-        assertEquals(0.87, getParsedProbability("walk in"));
+        assertEquals(0.87, getParsedProbability("walk in the park"));
     }
 
     @Test
@@ -344,9 +344,9 @@ class TaskSelectionServiceTest {
         double expectedScore = switch (probability.toLowerCase().replace(" ", "")) {
             case "surething" -> 98.0;
             case "pieceofcake" -> 96.0;
-            case "walkin" -> 87.0;
-            case "hmmm" -> 78.0;
-            case "quitely" -> 75.0;
+            case "walkinthepark" -> 87.0;
+            case "hmmm...." -> 78.0;
+            case "quitelikely" -> 75.0;
             case "gamble" -> 55.0;
             case "risky" -> 46.0;
             case "ratherdetrimental" -> 33.0;
